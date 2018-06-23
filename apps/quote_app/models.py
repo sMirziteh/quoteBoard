@@ -40,4 +40,4 @@ class Quotes(models.Model):
     posted_by = models.ForeignKey(Users, related_name='quotes_posted')
     objects = QuoteManager()
     def __repr__(self):
-        return f"<Quotes: {self.quote} {self.author} {self.likes}>"
+        return "<Quotes: {} {} {}>".format(self.quote, self.author, self.likes)

@@ -21,7 +21,7 @@ def processReg(request):
         return redirect('/')
     else:
         request.session['user_id'] = result.id
-    return redirect(f'/quotes')
+    return redirect('/quotes')
 
 
 def login(request):
@@ -33,7 +33,7 @@ def login(request):
         return redirect('/')
     else:
         request.session['user_id'] = result.id
-    return redirect(f'/quotes')
+    return redirect('/quotes')
 
 
 def reset(request):

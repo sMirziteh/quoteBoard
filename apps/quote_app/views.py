@@ -54,7 +54,7 @@ def editUser(request):
     if type(result) is list:
         for error in result:
             messages.error(request, error)
-        return redirect(f'myaccount/{user_id}')
+        return redirect('myaccount/{}'.format(user_id))
     return redirect('/quotes')
     
 def deleteQuote(request, quote_id):
