@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <title>Quote Dashboard</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper" id="top">
+            <h4 class="brand-logo">Welcome, {{user.first_name}} {{user.last_name}}!</h4>
+            <ul class="right " id="nav-mobile">
+                <li class="">
+                    <!-- this link will send logged in user id to views to edit the account -->
+                    <a href="/myaccount/{{user.id}}">Edit My Account</a>
+                </li>
+                <li>
+                    <a href="/reset">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="section right">
+            {% if messages %}
+            <ul class="messages red-text">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>**{{ message }}**</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col l6">
+                <h5 class="center-align">Quotes</h5>
+                <div class="row">
+                    {%if quotes%}
+                    {%for q in quotes%}
+                    <div class="col l12 card">
+                        <p>
+                            {{q.quote}}
+                        </p>
+                        <p>
+                            <!-- a tag will have author id in context and send to views -->
+                            Posted by <a href="/user/{{q.posted_by.id}}">{{q.posted_by.first_name}}</a> 
+                        </p>
+                        <p>
+                            <form action="/addlike" method="POST">
+                                {% csrf_token %}
+                                <div class="input-field right">
+                                    <h6 class="left">{{q.likes.all|length}} people like this</h6><br>
+                                    <input type="hidden" name="like" value="{{q.id}}">
+                                    <button type="submit" class="btn hoverable ">Like!</button>
+                                </div>
+                                {%if q.posted_by.id == request.session.user_id%}
+                                <a href="/deleteQuote/{{q.id}}" class="">Delete</a>
+                                {%endif%}
+                            </form>
+                        </p>
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+            </div>
+            <div class="col l4 offset-l2">
+                <h5 class="center-align">Add a Quote!</h5>
+                <div class="row">
+                    <div class="col l12">
+                        <form action="/createQuote" method="post">
+                            {% csrf_token %}
+                            <div class="input-field">
+                                <input type="text" name="author" class="validate" id="author">
+                                <label for="author">Author</label>
+                                <input type="hidden" name="user_id" value="">
+                                <br>
+                                <textarea name="quote" id="quote" placeholder="Quote" class="materialize-textarea"></textarea>
+                                <!-- <label for="quote">Quote</label> -->
+                                <button type="submit" class="btn hoverable">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <title>User Quotes</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper" id="top">
+            <h4 class="brand-logo">{{poster.first_name}} {{poster.last_name}}'s Quotes</h4>
+            <ul class="right " id="nav-mobile">
+                <li class="">
+                    <a href="/quotes">Back</a>
+                </li>
+                <li>
+                    <a href="/reset">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="section"></div>
+    <div class="container">
+        
+        {%if posts%}
+        {%for p in posts%}
+        <div class="row">
+            <div class="col l12">
+                <!-- <h4 class="center-align">Shelby Mirziteh's Quotes</h4> -->
+                <div class="card col l6 offset-l3">
+                        <p><b>{{p.author}}</b></p>
+                        <p>{{p.quote}}</p>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+        {%endif%}
+    </div>
+</body>
+
+</html>
